@@ -2,10 +2,30 @@
 
 Tres dashboards locales para explorar estadísticas del archivo `Accidentes_cifra2015.xlsx`.
 
-## Requisitos
+## Blog React
 
-- Node.js 18 o posterior
-- No requiere dependencias externas
+Requiere Node.js 20.19 o posterior.
+
+```sh
+npm install
+npm run dev
+```
+
+El blog queda en `http://localhost:5173`. Para compilar la versión de producción, ejecuta `npm run build`.
+
+### Docker
+
+Construye la imagen y arranca el blog de producción con:
+
+```sh
+docker compose up --build -d
+```
+
+Abre `http://localhost:8080`. Para detenerlo, ejecuta `docker compose down`. Compose contiene el blog React; los tres dashboards Node siguen ejecutándose de forma independiente.
+
+## Dashboards Node
+
+Los tres dashboards independientes siguen disponibles sin dependencias adicionales:
 
 ## Ejecutar
 
@@ -17,7 +37,9 @@ node dashboard.js
 node victimas.js
 ```
 
-Abre `http://localhost:3000` para el resumen general, `http://localhost:3001` para los cruces de severidad y `http://localhost:3002` para el perfil de víctimas fatales.
+- `http://localhost:3000`: resumen general
+- `http://localhost:3001`: cruces de severidad
+- `http://localhost:3002`: perfil de víctimas fatales
 
 ## Datos
 

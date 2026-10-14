@@ -199,7 +199,7 @@ const html = `<!doctype html>
     }
     renderBars('roleChart', DATA.roles, DATA.deaths, 'role');
     renderBars('typeChart', DATA.types, DATA.types[0].count, 'type');
-    renderBars('periodChart', DATA.periods, DATA.periods[0].count, 'type');
+    renderBars('periodChart', DATA.periods, Math.max.apply(null, DATA.periods.map((period) => period.count)), 'type');
     renderBars('dayChart', DATA.weekdays, DATA.weekdays[6].count, 'type');
 
     const monthRoot = document.getElementById('monthChart');

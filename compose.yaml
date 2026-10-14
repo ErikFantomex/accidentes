@@ -1,0 +1,9 @@
+services:
+  blog:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: accidentes-blog:local
+    ports:
+      - "8080:80"
+    restart: unless-stopped
