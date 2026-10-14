@@ -1,6 +1,6 @@
 # Accidentes de tránsito 2015
 
-Dos dashboards locales para explorar estadísticas del archivo `Accidentes_cifra2015.xlsx`.
+Tres dashboards locales para explorar estadísticas del archivo `Accidentes_cifra2015.xlsx`.
 
 ## Requisitos
 
@@ -14,9 +14,10 @@ Inicia cada tablero en una terminal distinta:
 ```sh
 node index.js
 node dashboard.js
+node victimas.js
 ```
 
-Abre `http://localhost:3000` para el resumen general y `http://localhost:3001` para los cruces de severidad.
+Abre `http://localhost:3000` para el resumen general, `http://localhost:3001` para los cruces de severidad y `http://localhost:3002` para el perfil de víctimas fatales.
 
 ## Datos
 
