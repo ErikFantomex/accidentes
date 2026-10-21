@@ -134,8 +134,103 @@ function CountBars({ data, max, className = '' }) {
   );
 }
 
+const questionViews = {
+  resumen: {
+    label: 'Resumen',
+    title: 'Las cifras que dimensionan el problema',
+    intro: 'Una respuesta rápida a las preguntas sobre volumen, calendario y tipos de accidente.',
+    questions: [
+      ['¿Cuántos accidentes hubo y qué tan graves fueron?', '180,066 registros: 78.8% solo daños, 20.2% con heridos y 1.0% fatales (1,797). Murieron 2,061 personas y 51,132 resultaron heridas.', 'Dimensionar el problema y tener una línea base para medir si baja.'],
+      ['¿Cuándo ocurren más accidentes?', 'El sábado es el día con más registros (28,773) y la hora pico es a las 14:00 (12,049). Entre meses cambia poco: de 14,027 a 15,914.', 'Repartir agentes y turnos según la demanda de cada día y hora.'],
+      ['¿Qué tipos de accidente son más comunes y cuáles más letales?', 'La colisión con vehículo automotor es el 68.3% de los registros, pero solo el 0.30% es fatal. El atropellamiento (6.71%) y la volcadura (6.56%) son los más letales.', 'Priorizar cruces peatonales y control de velocidad, no solo donde hay más choques.']
+    ]
+  },
+  severidad: {
+    label: 'Severidad',
+    title: 'Dónde cambia la gravedad',
+    intro: 'Las proporciones comparan registros fatales dentro de cada grupo. Son asociaciones descriptivas, no pruebas de causalidad.',
+    questions: [
+      ['¿Cuándo son más graves?', 'De 0 a 5 h, el 1.76% de los accidentes son fatales, contra 0.69% de 12 a 17 h. El domingo llega a 1.61%, contra 0.74% el martes.', 'Organizar operativos de noche y en domingo, y más ambulancias en esas horas.'],
+      ['¿El alcohol o la falta de cinturón se asocian con accidentes fatales?', 'Con aliento alcohólico, el 1.25% de los accidentes son fatales; sin él, el 0.62%. Sin cinturón, el 0.94%; con cinturón, el 0.28%.', 'Diseñar campañas de alcohol y cinturón con cifras propias, sin confundir asociación con causa.'],
+      ['¿Cambia la gravedad con la edad del conductor responsable?', 'Con responsables menores de 18 años, el 1.48% de los accidentes son fatales; de 18 a 59 años, entre 0.74% y 0.80%. Es la edad del conductor, no de las víctimas.', 'Orientar la educación vial y los requisitos de licencia para conductores jóvenes.'],
+      ['¿Qué tan completo es el registro?', 'El alcohol se ignora en el 44.6% de los registros y el cinturón en el 68.6%. La causa dice «Conductor» en el 95.7%.', 'Saber qué campos mejorar y qué comparaciones son confiables.']
+    ]
+  },
+  victimas: {
+    label: 'Víctimas',
+    title: 'Quiénes mueren y cuándo',
+    intro: 'Aquí se cuentan personas fallecidas, no accidentes. Esa diferencia cambia la lectura de las prioridades.',
+    questions: [
+      ['¿Quiénes mueren y quiénes se lesionan?', 'De los 2,061 muertos, 895 eran conductores, 525 pasajeros y 521 peatones. Los peatones son el 25.3% de los muertos, pero solo el 15.5% de los heridos.', 'Proteger primero a los peatones con cruces, banquetas e iluminación.'],
+      ['¿Cuántas personas mueren en cada accidente fatal?', '1,616 accidentes fatales dejaron un muerto y 181 dejaron varios: 1.15 en promedio.', 'Prever atención para varias víctimas y no confundir accidentes con personas al reportar.'],
+      ['¿Qué tipos de accidente dejan más muertos?', 'Atropellamiento (523), colisión con vehículo automotor (465) y volcadura (344) suman el 64.6% de los muertos.', 'Enfocar la prevención en los accidentes donde más se pierden vidas.'],
+      ['¿Cuándo mueren más personas?', 'En domingo (488, contra 351 el sábado), de 18 a 23 h (646) y en noviembre (215; septiembre tuvo 133).', 'Crear un calendario de prevención para los días y horas con más muertes.']
+    ]
+  }
+};
+
+const openQuestions = [
+  ['¿Cambian las cifras al quitar las 4,634 filas idénticas en todas sus columnas?', 'Las 45 columnas', 'Saber si los totales y picos vienen de capturas dobles.'],
+  ['¿Son más letales los accidentes en zona suburbana que en la urbana?', 'URBANA, SUBURBANA, CLASACC', 'Decidir si invertir en caminos suburbanos o cruces urbanos.'],
+  ['¿Qué tan letales son los accidentes con moto, y cambia de noche?', 'MOTOCICLET, ID_HORA, CLASACC', 'Orientar campañas de casco y operativos para motociclistas.'],
+  ['¿Qué combinaciones pesan más, como alcohol con volcadura?', 'TIPACCID, ALIENTO, ID_HORA, CLASACC', 'Enfocar operativos donde se juntan dos condiciones.'],
+  ['¿En qué horas de cada día se concentran los accidentes fatales?', 'ID_HORA, DIASEMANA, CLASACC', 'Definir horarios precisos para operativos con un mapa de calor.'],
+  ['¿En cuántos accidentes huye el responsable y en qué tipos?', 'SEXO («Se fugó»), TIPACCID', 'Reforzar la investigación de conductores que huyen.'],
+  ['¿Qué pares de vehículos son más letales?', 'Las 13 columnas de vehículos CAPAROD', 'Regular el transporte público y de carga.'],
+  ['¿Los accidentes en calles sin pavimentar son más graves?', 'URBANA, SUBURBANA, CLASACC', 'Decidir qué calles pavimentar o dar mantenimiento primero.']
+];
+
+function QuestionCard({ question, answer, use }) {
+  return (
+    <article className="question-card">
+      <p className="question">{question}</p>
+      <p className="answer">{answer}</p>
+      <p className="question-use"><span>Sirve para</span>{use}</p>
+    </article>
+  );
+}
+
+function QuestionsView({ view }) {
+  const content = questionViews[view];
+  return (
+    <main className="questions-page wrap">
+      <div className="questions-heading">
+        <p className="eyebrow">Preguntas y utilidad · accidentes de tránsito 2015</p>
+        <h1>{content.title}</h1>
+        <p className="questions-intro">{content.intro}</p>
+      </div>
+      <section className="question-grid" aria-label={`Preguntas respondidas en ${content.label}`}>
+        {content.questions.map(([question, answer, use]) => <QuestionCard key={question} question={question} answer={answer} use={use} />)}
+      </section>
+      {view === 'severidad' && <p className="method-note"><strong>Lectura responsable.</strong> Los campos ignorados limitan las comparaciones. Las tasas son proporciones de registros, no riesgo individual.</p>}
+      {view === 'victimas' && <p className="method-note"><strong>Nota de conteo.</strong> Un accidente puede tener más de una persona fallecida; por eso 1,797 registros fatales producen 2,061 muertes.</p>}
+    </main>
+  );
+}
+
+function OpenQuestionsView() {
+  return (
+    <main className="questions-page wrap">
+      <div className="questions-heading">
+        <p className="eyebrow">Alcances · preguntas para profundizar</p>
+        <h1>Lo que todavía se puede investigar</h1>
+        <p className="questions-intro">Estas preguntas se pueden resolver con el mismo archivo, pero requieren cruces adicionales. Aquí quedan formuladas con sus columnas y utilidad.</p>
+      </div>
+      <section className="open-question-list" aria-label="Preguntas pendientes de análisis">
+        {openQuestions.map(([question, columns, use], index) => (
+          <article className="open-question" key={question}>
+            <span className="open-number">{String(index + 1).padStart(2, '0')}</span>
+            <div><h2>{question}</h2><p><strong>Columnas:</strong> {columns}</p><p className="question-use"><span>Serviría para</span>{use}</p></div>
+          </article>
+        ))}
+      </section>
+    </main>
+  );
+}
+
 export default function App() {
   const [selectedMonth, setSelectedMonth] = useState(months[10]);
+  const [activeView, setActiveView] = useState('resumen');
   const topThreeShare = (523 + 465 + 344) / totalDeaths * 100;
   const keyUsersShare = (895 + 525 + 521) / totalDeaths * 100;
 
@@ -146,16 +241,15 @@ export default function App() {
           <span className="wordmark-symbol">B</span>
           <span>Bitácora Vial<span className="wordmark-dot">.</span></span>
         </a>
-        <nav className="site-nav" aria-label="Navegación del artículo">
-          <a href="#cifra">La cifra</a>
-          <a href="#personas">Las personas</a>
-          <a href="#momentos">El calendario</a>
-          <a href="#limites">Alcances</a>
+        <nav className="site-nav" aria-label="Navegación de vistas">
+          {Object.entries(questionViews).map(([key, view]) => <button key={key} type="button" className={activeView === key ? 'is-active' : ''} aria-pressed={activeView === key} onClick={() => setActiveView(key)}>{view.label}</button>)}
+          <button type="button" className={activeView === 'blog' ? 'is-active' : ''} aria-pressed={activeView === 'blog'} onClick={() => setActiveView('blog')}>Blog</button>
+          <button type="button" className={activeView === 'alcances' ? 'is-active' : ''} aria-pressed={activeView === 'alcances'} onClick={() => setActiveView('alcances')}>Alcances</button>
         </nav>
         <span className="edition">ARCHIVO 2015</span>
       </header>
 
-      <main id="inicio">
+      {activeView === 'alcances' ? <OpenQuestionsView /> : activeView !== 'blog' ? <QuestionsView view={activeView} /> : <main id="inicio">
         <section className="hero wrap">
           <div className="hero-copy">
             <p className="eyebrow">Una lectura de los registros viales</p>
@@ -249,7 +343,7 @@ export default function App() {
             </section>
           </article>
         </div>
-      </main>
+      </main>}
 
       <footer className="site-footer"><div className="wrap"><span>Bitácora Vial · Una lectura del archivo de 2015</span><a href="#inicio">Volver arriba ↑</a></div></footer>
     </div>
