@@ -32,9 +32,9 @@ Los tres dashboards independientes siguen disponibles sin dependencias adicional
 Inicia cada tablero en una terminal distinta:
 
 ```sh
-node index.js
-node dashboard.js
-node victimas.js
+node dashboards/index.js
+node dashboards/dashboard.js
+node dashboards/victimas.js
 ```
 
 - `http://localhost:3000`: resumen general

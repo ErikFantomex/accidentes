@@ -137,12 +137,20 @@ function CountBars({ data, max, className = '' }) {
 const questionViews = {
   resumen: {
     label: 'Resumen',
-    title: 'Las cifras que dimensionan el problema',
-    intro: 'Una respuesta rápida a las preguntas sobre volumen, calendario y tipos de accidente.',
+    title: 'Las preguntas clave, respondidas',
+    intro: 'Una lectura integrada de volumen, gravedad, víctimas y momentos críticos de los accidentes de tránsito registrados en 2015.',
     questions: [
       ['¿Cuántos accidentes hubo y qué tan graves fueron?', '180,066 registros: 78.8% solo daños, 20.2% con heridos y 1.0% fatales (1,797). Murieron 2,061 personas y 51,132 resultaron heridas.', 'Dimensionar el problema y tener una línea base para medir si baja.'],
       ['¿Cuándo ocurren más accidentes?', 'El sábado es el día con más registros (28,773) y la hora pico es a las 14:00 (12,049). Entre meses cambia poco: de 14,027 a 15,914.', 'Repartir agentes y turnos según la demanda de cada día y hora.'],
-      ['¿Qué tipos de accidente son más comunes y cuáles más letales?', 'La colisión con vehículo automotor es el 68.3% de los registros, pero solo el 0.30% es fatal. El atropellamiento (6.71%) y la volcadura (6.56%) son los más letales.', 'Priorizar cruces peatonales y control de velocidad, no solo donde hay más choques.']
+      ['¿Cuándo son más graves?', 'De 0 a 5 h, el 1.76% de los accidentes son fatales, contra 0.69% de 12 a 17 h. El domingo llega a 1.61%, contra 0.74% el martes.', 'Organizar operativos de noche y en domingo, y más ambulancias en esas horas.'],
+      ['¿Qué tipos de accidente son más comunes y cuáles más letales?', 'La colisión con vehículo automotor es el 68.3% de los registros, pero solo el 0.30% es fatal. El atropellamiento (6.71%) y la volcadura (6.56%) son los más letales.', 'Priorizar cruces peatonales y control de velocidad, no solo donde hay más choques.'],
+      ['¿Quiénes mueren y quiénes se lesionan?', 'De los 2,061 muertos, 895 eran conductores, 525 pasajeros y 521 peatones. Los peatones son el 25.3% de los muertos, pero solo el 15.5% de los heridos.', 'Proteger primero a los peatones con cruces, banquetas e iluminación.'],
+      ['¿Cuántas personas mueren en cada accidente fatal?', '1,616 accidentes fatales dejaron un muerto y 181 dejaron varios: 1.15 en promedio.', 'Prever atención para varias víctimas y no confundir accidentes con personas al reportar.'],
+      ['¿Qué tipos de accidente dejan más muertos?', 'Atropellamiento (523), colisión con vehículo automotor (465) y volcadura (344) suman el 64.6% de los muertos.', 'Enfocar la prevención en los accidentes donde más se pierden vidas.'],
+      ['¿Cuándo mueren más personas?', 'En domingo (488, contra 351 el sábado), de 18 a 23 h (646) y en noviembre (215; septiembre tuvo 133).', 'Crear un calendario de prevención para los días y horas con más muertes.'],
+      ['¿El alcohol o la falta de cinturón se asocian con accidentes fatales?', 'Con aliento alcohólico, el 1.25% de los accidentes son fatales; sin él, el 0.62%. Sin cinturón, el 0.94%; con cinturón, el 0.28%.', 'Diseñar campañas de alcohol y cinturón con cifras propias. Es una asociación, no prueba la causa.'],
+      ['¿Cambia la gravedad con la edad del conductor responsable?', 'Con responsables menores de 18 años, el 1.48% de los accidentes son fatales; de 18 a 59 años, entre 0.74% y 0.80%. Es la edad del conductor, no de las víctimas.', 'Orientar la educación vial y los requisitos de licencia para conductores jóvenes.'],
+      ['¿Qué tan completo es el registro?', 'El alcohol se ignora en el 44.6% de los registros y el cinturón en el 68.6%. La causa dice «Conductor» en el 95.7%.', 'Saber qué campos mejorar y qué comparaciones son confiables.'],
     ]
   },
   severidad: {
