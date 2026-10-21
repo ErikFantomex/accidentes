@@ -13,6 +13,12 @@ npm run dev
 
 El blog queda en `http://localhost:5173`. Para compilar la versión de producción, ejecuta `npm run build`.
 
+### GitHub Pages
+
+El workflow de GitHub Actions publica automáticamente cada cambio enviado a `main`.
+La aplicación queda disponible en https://erikfantomex.github.io/accidentes/.
+En el repositorio, activa Pages con la fuente `GitHub Actions` si todavía no está habilitada.
+
 ### Docker
 
 Construye la imagen y arranca el blog de producción con:
